@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, useReducer } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+import List from './components/NewList'
+import listReducer, { defaultListState } from './components/NewList/reducer'
+
+const tableName = 'campaignsReferenceImages'
+
+const App = () => {
+  const id = 100
+  const [state, dispatch] = useReducer(listReducer, {
+    [tableName]: { [id]: defaultListState },
+  })
+
+  console.log(state)
+
+  return (
+    <div className="App">
+      <button
+        onClick={() =>
+          dispatch({ type: 'setPage', payload: 111, meta: { tableName, tableId: id } })
+        }
+      >
+        Set page = 111
+      </button>
+    </div>
+  )
 }
 
-export default App;
+export default App
